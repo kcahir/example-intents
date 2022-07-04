@@ -1,0 +1,16 @@
+- ansible-intent: # might not need to have this - depends on loader
+  steps:
+    - name: Ansible runner
+      path: playbooks/test_ansible.yml
+      engine: ansible
+  request_schema:
+    properties:
+      test:
+        type: string
+    required:
+      - test
+  url_slug: 'ansible'
+  name: 'Ansible test'
+  placement: #scheduler
+    properties:
+      zone: 'any'

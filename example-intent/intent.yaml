@@ -1,0 +1,89 @@
+- example-intent: # might not need to have this - depends on loader
+  steps:
+    # - name: test
+    #   path: hello/test.py
+    #   engine: raw 
+    # - name: test
+    #   path: hello/run
+    #   engine: shell 
+    - name: Example step
+      path: hello/run
+      engine: python # is this necessary with the #! pattern? probably - containers?
+    # - name: concurrent
+    #   steps: # defaults to concurrent
+    #     - name: Example concurrent step
+    #       path: hello/run
+    #       engine: python
+    #     - name: Example concurrent step
+    #       path: hello/run
+    #       engine: python
+  request_schema:
+    properties:
+      test-string:
+        type: string
+      context:
+        type: object
+        $ref: "#/definitions/context"
+    required:
+      - test-string
+    definitions:
+      context:
+        type: object
+        properties:
+          stringa:
+            type: string
+          number:
+            type: integer
+        required:
+          - str-a
+
+    # Need to work this out
+  url_slug: 'hello-world' # added to config base-path
+  name: 'Example Demo Intent' #logging
+  placement: #scheduler
+    properties:
+      zone: 'any'
+
+
+- example-intent-2: # might not need to have this - depends on loader
+  steps:
+    - name: test
+      path: hello/test.py
+      engine: raw
+    - name: test
+      path: hello/run
+      engine: shell
+    - name: Example step
+      path: hello/run
+      engine: python # is this necessary with the #! pattern? probably - containers?
+    - name: concurrent
+      steps: # defaults to concurrent
+        - name: Example concurrent step
+          path: hello/run
+          engine: python
+        - name: Example concurrent step
+          path: hello/run
+          engine: python
+  request_schema:
+    properties:
+      test-string:
+        type: string
+      name:
+        type: string
+      rpc-api:
+        type: string
+      one-username:
+        type: string
+      one-password:
+        type: string
+    required:
+      - test-string
+      - one-password
+      - one-username
+      - rpc-api
+    # Need to work this out
+  url_slug: 'another-test' # added to config base-path
+  name: 'another-test' #logging
+  placement: #scheduler
+    properties:
+      zone: 'any'

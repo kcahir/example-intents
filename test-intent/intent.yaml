@@ -1,0 +1,112 @@
+- test-intent: # might not need to have this - depends on loader
+  steps:
+    # - name: test
+    #   path: hello/test.py
+    #   engine: raw 
+    # - name: test
+    #   path: hello/run
+    #   engine: shell 
+    - name: test step
+      path: code/main.py
+      engine: python # is this necessary with the #! pattern? probably - containers?
+    # - name: concurrent
+    #   steps: # defaults to concurrent
+    #     - name: Example concurrent step
+    #       path: hello/run
+    #       engine: python
+    #     - name: Example concurrent step
+    #       path: hello/run
+    #       engine: python
+  request_schema:
+    properties:
+      test-string:
+        type: string
+      context:
+        type: object
+        $ref: "#/definitions/context"
+      host-name:
+        type: string
+      host-zone:
+        type: string
+      host-tag:
+        type: array
+        items:
+          type: string
+
+    required:
+      - test-string
+      - context
+      - host-tag
+
+    definitions:
+      context:
+          properties:
+            name:
+              type: string
+          required:
+            - name
+
+   # Need to work this out
+  url_slug: 'test' # added to config base-path
+  name: 'test Demo Intent' #logging
+  placement: #scheduler
+#    properties:
+#      zone: 'any'
+    properties:
+      zone:
+        key: 'host-zone'
+      name:
+        key: 'host-name'
+      tag:
+        key: 'host-tag'
+
+- test-recurring:
+  steps:
+    - name: first step
+      path: code/recurring.py
+      engine: python
+
+  request_schema:
+    properties:
+      arg1:
+        type: string
+      arg2:
+        type: integer
+    required:
+      - arg1
+
+  name: 'demo recurring intent'
+  url_slug: 'test-recurring'
+  placement:
+    properties:
+      name:
+        key: 'arg1'
+  recurring:
+    - desc: 'heartbeat check'
+      minutes: "*/3"
+      data:
+        arg1: 'somestring'
+        arg2: 5
+    - desc: 'monitor perf'
+      minutes: "*/13"
+      data:
+        arg1: 'anotherstring'
+        arg2: 10
+
+- test-custom:
+  steps:
+    - name: custom engine
+      path: 'custom-intent'
+      engine: custom
+
+  request_schema:
+    properties:
+      arg1:
+        type: string
+      arg2:
+        type: integer
+    required:
+      - arg1
+
+  name: 'custom engine test'
+  url_slug: 'custom'

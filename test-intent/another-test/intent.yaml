@@ -1,0 +1,25 @@
+- another-test-intent: # might not need to have this - depends on loader
+  steps:
+    - name: test step
+      path: code/main.py
+      engine: python # is this necessary with the #! pattern? probably - containers?
+  request_schema:
+    properties:
+      test-string:
+        type: string
+    required:
+      - test-string
+
+    definitions:
+      context:
+        properties:
+          name:
+            type: string
+        required:
+          - name
+
+  url_slug: 'another-test' # added to config base-path
+  name: 'test Demo Intent' #logging
+  placement: #scheduler
+    properties:
+      zone: 'any'

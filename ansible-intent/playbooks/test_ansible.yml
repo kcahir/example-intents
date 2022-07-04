@@ -1,0 +1,6 @@
+---
+- name: Test playbook
+  hosts: all
+  tasks:
+     - name: Leaving a mark
+       command: "touch /tmp/hello_ansible"
