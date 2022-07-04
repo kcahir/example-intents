@@ -85,12 +85,12 @@
     - desc: 'heartbeat check'
       minutes: "*/3"
       data:
-        arg1: 'somestring'
+        arg1: 'demoapp'
         arg2: 5
     - desc: 'monitor perf'
       minutes: "*/13"
       data:
-        arg1: 'anotherstring'
+        arg1: 'demoapp'
         arg2: 10
 
 - test-custom:
